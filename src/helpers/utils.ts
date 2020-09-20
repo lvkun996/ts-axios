@@ -15,3 +15,14 @@ export const isDate = (value: any): value is Date => {
 export const isPlainObject = (value:any): value is Object =>  {
     return toString.call(value) === '[object Obejct]'
 }
+
+
+export function extend <T, U>(to: T, from: U): T & U {
+    console.log(to, from);
+    
+    for(const key in from) {
+        ;(to as T & U)[key] = from[key] as any
+    }
+
+    return to as T & U
+}
