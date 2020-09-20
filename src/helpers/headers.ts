@@ -2,12 +2,12 @@ import { isPlainObject } from './utils'
 
 
 function noramalizeHeaderName( headers:any, noramalizeName:string):void {
-    if (headers === null) {
+    if (headers === null ) {
         return
     }
 
     Object.keys(headers).forEach( key => {
-        if (key && key !== noramalizeName && key.toUpperCase() === noramalizeName.toUpperCase()) {
+        if (key && noramalizeName && key !== noramalizeName && key.toUpperCase() === noramalizeName.toUpperCase()) {
             headers[noramalizeName] = headers[key]
             delete headers[key]
         }

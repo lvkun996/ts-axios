@@ -6,8 +6,6 @@ export type Methods = 'get' | 'GET'
 | 'put' | 'PUT'
 | 'patch' | 'PATCH'
 
-
-
 export interface AxiosRequestConfig {
     url?: string,
     method?: Methods,
@@ -16,10 +14,10 @@ export interface AxiosRequestConfig {
     headers?:any,
     responseType?: XMLHttpRequestResponseType,
     timeout?: number
+
 }
 
-
-export interface AxiosResponse<T> {
+export interface AxiosResponse<T = any> {
     data: T,
     status: number,
     statusText: string,
@@ -38,12 +36,16 @@ export interface AxiosError extends Error {
      config: AxiosRequestConfig,
      code?: string,
      request?:any,
-     response?: AxiosResponse<any>,
+     response?: AxiosResponse,
      isAxiosError: boolean
 }
 
-
 export interface Axios {
+    interceptors: {
+        request: AxiosInterceptorManger<AxiosRequestConfig>
+        response: AxiosInterceptorManger<AxiosResponse>
+    }
+    
     request<T = any>(config: AxiosRequestConfig):AxiosPromise<T>
 
     get<T = any>(url: string, config?: AxiosRequestConfig):AxiosPromise<T>
@@ -69,3 +71,17 @@ export interface AxiosInstance extends Axios {
 // export interface AxiosRequestConfig  {
 //     url?:string
 // }
+
+export interface AxiosInterceptorManger<T> {
+    use(resolved: ResolvedFn<T>, rejected?: RejectedFn ): number
+    eject(id: number): void
+}
+
+export interface ResolvedFn<T = any> {
+    (val: T): T | Promise<T>
+}
+
+export interface RejectedFn {
+    (error: any): any
+}
+
