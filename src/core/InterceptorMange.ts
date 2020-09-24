@@ -24,6 +24,9 @@ export default  class interceptorMange<T> {
     }
  
     forEach(fn: (interceptor: interceptor<T>) => void): void {
+   
+      
+        
         this.interceptors.forEach( interceptor => {
             if (interceptor !== null) {
                 fn(interceptor)

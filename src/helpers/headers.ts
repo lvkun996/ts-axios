@@ -1,5 +1,5 @@
-import { isPlainObject } from './utils'
-
+import { isPlainObject, deepMerge } from './utils'
+import {  Methods } from '../types/index'
 
 function noramalizeHeaderName( headers:any, noramalizeName:string):void {
     if (headers === null ) {
@@ -13,6 +13,7 @@ function noramalizeHeaderName( headers:any, noramalizeName:string):void {
         }
     })
 }
+
 
 export function  processHeaders (headers: any, data: any):any {
     noramalizeHeaderName(headers, data)
@@ -52,3 +53,20 @@ export function parseHeaders (headers: string ):any {
 
     return parsed
 }
+
+// 对请求的method做配置
+
+export function flattenHeaders(headers: any, method: Methods): any {
+    if (!headers) {
+      return headers
+    }
+    headers = deepMerge(headers.common || {}, headers[method] || {}, headers)
+  
+    const methodsToDelete = ['delete', 'get', 'head', 'options', 'post', 'put', 'patch', 'common']
+  
+    methodsToDelete.forEach(method => {
+      delete headers[method]
+    })
+  
+    return headers
+  }

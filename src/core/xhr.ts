@@ -6,7 +6,7 @@ export default function xhr(config: AxiosRequestConfig):AxiosPromise {
         const { data = null, url, method='get',headers, responseType , timeout} = config
         
         const request = new XMLHttpRequest()
-        //  async: true
+        
     
         if (responseType) {
             request.responseType = responseType
@@ -15,7 +15,8 @@ export default function xhr(config: AxiosRequestConfig):AxiosPromise {
         if (timeout) {
             request.timeout = timeout
         }
-    
+        
+        //  async: true
         request.open(method.toUpperCase() , url!, true)
 
         request.onerror = function handleError () {

@@ -25,6 +25,8 @@ let interceptor = axios.interceptors.response.use(res => {
   return res
 })
 axios.interceptors.response.use(res => {
+  console.log(res, 'res');
+  
   res.data += '3'
   return res
 })
